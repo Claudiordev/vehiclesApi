@@ -26,6 +26,7 @@ A vehicles listing GraphQL API made with Spring Boot and Java.
 - After all the steps above, just hit play on the spring boot application and enjoy!
 
 ## Queries available
+- All queries must be done by HTTP POST on localhost:8080/vehicle/graphql
 - Search by vehicle ID:
 ```
 vehicleById(id: "2337d25f-8917-4e26-920f-ddbe9ba063d6") {
