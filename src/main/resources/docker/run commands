@@ -1,2 +1,4 @@
+#Build image from dockerfile
+docker build -t mysqlimage:1.0
 #Run docker container from image created
 docker run --name database-mysql -p 3306:3306 -d mysqlimage:1.0
