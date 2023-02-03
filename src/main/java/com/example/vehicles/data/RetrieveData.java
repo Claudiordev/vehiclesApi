@@ -55,7 +55,15 @@ public class RetrieveData {
                 vehicleName = vehicleObject.getString("name");
             } catch (JSONException ignored) {}
 
-            gatherInfo(vehicleId,vehicleName);
+            try {
+                gatherInfo(vehicleId, vehicleName);
+            } catch (HttpClientErrorException httpClientErrorException) {
+                if (httpClientErrorException.getStatusCode().value() == 401){
+                    if (!vehicleService.exists(vehicleId)) {
+                        vehicleService.save(new Vehicle(vehicleId,vehicleName));
+                    }
+                }
+            }
 
             gatherServices(vehicleId);
         }
@@ -66,8 +74,7 @@ public class RetrieveData {
      * @param vehicleId
      * @param vehicleName
      */
-    public void gatherInfo(String vehicleId,String vehicleName){
-        try {
+    public void gatherInfo(String vehicleId,String vehicleName) throws HttpClientErrorException{
             ResponseEntity<String> infoResponse = new RestTemplate().getForEntity("http://localhost:1337/vehicle/info?id=" + vehicleId, String.class);
             JSONObject vehicleInfo = new JSONObject(infoResponse.getBody());
 
@@ -117,10 +124,6 @@ public class RetrieveData {
                         vehicleInfo.getString("chassisNumber"),
                         chassisSeries));
             }
-
-        } catch (HttpClientErrorException ignored) {
-
-        }
     }
 
     /**

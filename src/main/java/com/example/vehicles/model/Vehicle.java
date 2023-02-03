@@ -9,20 +9,20 @@ import java.util.Set;
 @Table(name = "vehicles", schema = "vehicles")
 public class Vehicle {
     @Id
-    @Column(name = "id", nullable = true, length = 36, unique = true)
+    @Column(name = "id", length = 36, unique = true)
     private String id;
     @Basic
-    @Column(name = "name", nullable = true, length = 50)
+    @Column(name = "name", length = 50)
     private String name;
     @Basic
-    @Column(name = "msidn", nullable = false, length = 50)
+    @Column(name = "msidn", length = 50,nullable = true)
     private String msidn;
     @Basic
-    @Column(name = "chassis_number", nullable = false, length = 17)
+    @Column(name = "chassis_number", length = 17,nullable = true)
     private String chassisNumber;
 
     @ManyToOne
-    @JoinColumn(name = "engine_status_id",referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "engine_status_id",referencedColumnName = "id",nullable = true)
     private Status engineStatus;
 
     @ManyToOne
@@ -30,16 +30,16 @@ public class Vehicle {
     private Status communicationStatus;
 
     @ManyToOne
-    @JoinColumn(name = "fleet_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "fleet_id", referencedColumnName = "id",nullable = true)
     private Fleet fleet;
     @ManyToOne
-    @JoinColumn(name = "brand_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "brand_id", referencedColumnName = "id",nullable = true)
     private Brand brand;
     @ManyToOne
-    @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "country_id", referencedColumnName = "id",nullable = true)
     private Country country;
     @ManyToOne
-    @JoinColumn(name = "chassis_series_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "chassis_series_id", referencedColumnName = "id",nullable = true)
     private ChassisSeries chassisSeries;
 
     @ManyToMany
@@ -47,8 +47,13 @@ public class Vehicle {
     private Collection<Service> services;
 
     public Vehicle(){
-
     }
+
+    public Vehicle(String id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
     public Vehicle(String id, String name, String msidn, Status engineStatus, Fleet fleet, Brand brand, Country country, String chassisNumber, ChassisSeries chassisSeries) {
         this.id = id;
         this.name = name;
