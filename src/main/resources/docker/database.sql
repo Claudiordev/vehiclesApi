@@ -18,6 +18,7 @@
 --
 -- Table structure for table `brands`
 --
+
 CREATE DATABASE IF NOT EXISTS vehicles;
 
 USE vehicles;
@@ -29,7 +30,7 @@ CREATE TABLE `brands` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +53,7 @@ CREATE TABLE `chassis_series` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +76,7 @@ CREATE TABLE `countries` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +99,7 @@ CREATE TABLE `fleets` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +129,7 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (49);
+INSERT INTO `hibernate_sequence` VALUES (73);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +144,7 @@ CREATE TABLE `services` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,18 +164,19 @@ DROP TABLE IF EXISTS `services_vehicles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `services_vehicles` (
-  `services_id` int NOT NULL,
-  `vehicle_id` varchar(36) NOT NULL,
-  `service_status_id` int NOT NULL,
-  `reason` varchar(255) DEFAULT NULL,
-  `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id` bigint NOT NULL,
-  KEY `services_id` (`services_id`),
-  KEY `service_status_id` (`service_status_id`),
-  KEY `vehicle_id` (`vehicle_id`),
-  CONSTRAINT `services_vehicles_ibfk_1` FOREIGN KEY (`services_id`) REFERENCES `services` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `services_vehicles_ibfk_2` FOREIGN KEY (`service_status_id`) REFERENCES `status` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `services_vehicles_ibfk_3` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`id`) ON DELETE CASCADE
+  `last_update` datetime(6) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `services_id` int NOT NULL,
+  `service_status_id` int NOT NULL,
+  `vehicle_id` varchar(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKmekllq1yp40dxdla3lvq6t4yx` (`services_id`),
+  KEY `FK6dqlg4k7axy7jbm1561pbdanx` (`service_status_id`),
+  KEY `FKg5d0nqok59yd5oayoxt669g6i` (`vehicle_id`),
+  CONSTRAINT `FK6dqlg4k7axy7jbm1561pbdanx` FOREIGN KEY (`service_status_id`) REFERENCES `status` (`id`),
+  CONSTRAINT `FKg5d0nqok59yd5oayoxt669g6i` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`id`),
+  CONSTRAINT `FKmekllq1yp40dxdla3lvq6t4yx` FOREIGN KEY (`services_id`) REFERENCES `services` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -198,7 +200,7 @@ CREATE TABLE `status` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,16 +222,16 @@ DROP TABLE IF EXISTS `vehicles`;
 CREATE TABLE `vehicles` (
   `id` varchar(36) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
-  `msidn` varchar(50) NOT NULL,
-  `engine_status_id` int NOT NULL,
-  `fleet_id` int NOT NULL,
-  `brand_id` int NOT NULL,
-  `country_id` int NOT NULL,
-  `chassis_number` varchar(17) NOT NULL,
-  `chassis_series_id` int NOT NULL,
+  `msidn` varchar(50) DEFAULT NULL,
+  `engine_status_id` int DEFAULT NULL,
+  `fleet_id` int DEFAULT NULL,
+  `brand_id` int DEFAULT NULL,
+  `country_id` int DEFAULT NULL,
+  `chassis_number` varchar(17) DEFAULT NULL,
+  `chassis_series_id` int DEFAULT NULL,
   `communication_status_id` int DEFAULT NULL,
-  UNIQUE KEY `chassis_number` (`chassis_number`),
   UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `chassis_number` (`chassis_number`),
   KEY `engine_status_id` (`engine_status_id`),
   KEY `fleet_id` (`fleet_id`),
   KEY `brand_id` (`brand_id`),
@@ -263,4 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-03 21:04:49
+-- Dump completed on 2023-02-03 21:56:35
