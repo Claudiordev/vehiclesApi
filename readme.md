@@ -43,7 +43,10 @@ vehicleById(id: "2337d25f-8917-4e26-920f-ddbe9ba063d6") {
 vehicleByName(name: "truck"){
   id
   name
-  msidn
+  chassisNumber
+  engineStatus{
+    name
+  }
 }
 ```
 

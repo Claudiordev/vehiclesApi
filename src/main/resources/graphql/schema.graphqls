@@ -19,7 +19,7 @@ type Vehicles{
     engineStatus: Status
     fleet: Fleet
     country: Country
-    chassisNumber: String!
+    chassisNumber: String
     chassisSeries: ChassisSeries
     services: [Service]
     communicationStatus: Status
