@@ -25,4 +25,8 @@ public class ServiceVehiclesService {
     public List<ServicesVehicles> findByVehicleId(String id){
         return servicesVehiclesRepository.findByVehicleId(id);
     }
+
+    public List<ServicesVehicles> findByServiceNameAndServiceStatus(String serviceName, String serviceStatus){
+        return servicesVehiclesRepository.findByServiceNameAndServiceStatusName(serviceName,serviceStatus);
+    }
 }

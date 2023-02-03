@@ -12,4 +12,6 @@ public interface ServicesVehiclesRepository extends JpaRepository<ServicesVehicl
     List<ServicesVehicles> findAllByVehicleAndService(Vehicle vehicle, Service service);
 
     List<ServicesVehicles> findByVehicleId(String id);
+
+    List<ServicesVehicles> findByServiceNameAndServiceStatusName(String serviceName, String serviceStatus);
 }
