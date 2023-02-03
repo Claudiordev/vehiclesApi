@@ -1,12 +1,10 @@
 package com.example.vehicles.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "services_status", schema = "vehicles")
-public class ServicesStatus {
+public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
@@ -14,13 +12,11 @@ public class ServicesStatus {
     @Basic
     @Column(name = "name", nullable = false, length = 50)
     private String name;
-    @OneToMany(mappedBy = "serviceStatus")
-    private Collection<ServicesVehicles> servicesVehiclesById;
 
-    public ServicesStatus(){
+    public Status(){
     }
 
-    public ServicesStatus(String name) {
+    public Status(String name){
         this.name = name;
     }
 
@@ -44,20 +40,12 @@ public class ServicesStatus {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ServicesStatus that = (ServicesStatus) o;
-        return id == that.id && Objects.equals(name, that.name);
+        Status status = (Status) o;
+        return id == status.id && Objects.equals(name, status.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
-    }
-
-    public Collection<ServicesVehicles> getServicesVehiclesById() {
-        return servicesVehiclesById;
-    }
-
-    public void setServicesVehiclesById(Collection<ServicesVehicles> servicesVehiclesById) {
-        this.servicesVehiclesById = servicesVehiclesById;
     }
 }

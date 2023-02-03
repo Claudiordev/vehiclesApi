@@ -20,12 +20,15 @@ public class Vehicle {
     @Basic
     @Column(name = "chassis_number", nullable = false, length = 17)
     private String chassisNumber;
-    @Basic
-    @Column(name = "communication_status", nullable = true)
-    private Byte communicationStatus;
+
     @ManyToOne
-    @JoinColumn(name = "engine_status_id", referencedColumnName = "id", nullable = false)
-    private EngineStatus engineStatus;
+    @JoinColumn(name = "engine_status_id",referencedColumnName = "id",nullable = false)
+    private Status engineStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "communication_status_id", referencedColumnName = "id",nullable = true)
+    private Status communicationStatus;
+
     @ManyToOne
     @JoinColumn(name = "fleet_id", referencedColumnName = "id", nullable = false)
     private Fleet fleet;
@@ -46,7 +49,7 @@ public class Vehicle {
     public Vehicle(){
 
     }
-    public Vehicle(String id, String name, String msidn, EngineStatus engineStatus, Fleet fleet, Brand brand, Country country, String chassisNumber, ChassisSeries chassisSeries, boolean communicationStatus) {
+    public Vehicle(String id, String name, String msidn, Status engineStatus, Fleet fleet, Brand brand, Country country, String chassisNumber, ChassisSeries chassisSeries) {
         this.id = id;
         this.name = name;
         this.msidn = msidn;
@@ -56,7 +59,6 @@ public class Vehicle {
         this.country = country;
         this.chassisNumber = chassisNumber;
         this.chassisSeries = chassisSeries;
-        this.communicationStatus = (communicationStatus) ? (byte) 1 : (byte)0;
     }
 
     public String getId() {
@@ -99,11 +101,19 @@ public class Vehicle {
         this.chassisNumber = chassisNumber;
     }
 
-    public Byte getCommunicationStatus() {
+    public Status getEngineStatus() {
+        return engineStatus;
+    }
+
+    public void setEngineStatus(Status engineStatus) {
+        this.engineStatus = engineStatus;
+    }
+
+    public Status getCommunicationStatus() {
         return communicationStatus;
     }
 
-    public void setCommunicationStatus(Byte communicationStatus) {
+    public void setCommunicationStatus(Status communicationStatus) {
         this.communicationStatus = communicationStatus;
     }
 
@@ -117,15 +127,7 @@ public class Vehicle {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, msidn, chassisNumber, communicationStatus);
-    }
-
-    public EngineStatus getEngineStatus() {
-        return engineStatus;
-    }
-
-    public void setEngineStatus(EngineStatus engineStatusByEngineStatusId) {
-        this.engineStatus = engineStatusByEngineStatusId;
+        return Objects.hash(id, name, msidn, chassisNumber);
     }
 
     public Fleet getFleet() {

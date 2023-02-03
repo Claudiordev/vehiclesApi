@@ -19,23 +19,25 @@ public class ServicesVehicles {
     private Service service;
     @ManyToOne
     @JoinColumn(name = "service_status_id", referencedColumnName = "id", nullable = false)
-    private ServicesStatus serviceStatus;
+    private Status serviceStatus;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id",nullable = false)
     private Vehicle vehicle;
+
     @GeneratedValue
     @Id
     private Long id;
+
     public ServicesVehicles(){
     }
 
-    public ServicesVehicles(Service service,Vehicle vehicle,ServicesStatus servicesStatus, String reason){
+    public ServicesVehicles(Service service,Vehicle vehicle,Status servicesStatus, String reason){
         this.service = service;
         this.vehicle = vehicle;
         this.serviceStatus = servicesStatus;
         this.reason = reason;
-        //this.lastUpdate = (Timestamp) new Date();
+        this.lastUpdate = new Timestamp(System.currentTimeMillis());
     }
     public String getReason() {
         return reason;
@@ -72,15 +74,11 @@ public class ServicesVehicles {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
-    public ServicesStatus getServiceStatus() {
-        return serviceStatus;
-    }
-    public void setServiceStatus(ServicesStatus servicesStatusByServiceStatusId) {
-        this.serviceStatus = servicesStatusByServiceStatusId;
-    }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public Long getId() {
         return id;
     }
